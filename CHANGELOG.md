@@ -5,6 +5,7 @@
 ### Fixed
 
 - Website: refresh the social preview image for all 80 providers, include the newest integrations, and invalidate cached previews when the card changes.
+- Menu bar: show the Xiaomi MiMo balance in stored layout lanes, including the automatic lane for accounts without a token plan (#3897).
 
 ## 0.65.0 — 2026-09-22
 

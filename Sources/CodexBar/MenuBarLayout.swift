@@ -611,6 +611,12 @@ enum MenuBarLayoutBalanceResolver {
                 .number.precision(.fractionLength(0)).locale(Locale(identifier: "en_US")))
         case .openrouter:
             return snapshot?.detailRow(label: "Remaining")?.value
+        case .mimo:
+            // Provider-specific by design: MiMo reports its balance in a "Balance" detail row, whose
+            // paid/granted breakdown is dropped so the lane shows the headline amount, matching the
+            // legacy status-item path.
+            guard let detail = snapshot?.detailRow(label: "Balance")?.value else { return nil }
+            return detail.components(separatedBy: " (Paid:").first
         default:
             return nil
         }

@@ -378,6 +378,25 @@ struct MenuBarLayoutEditorTests {
                 balanceReadSucceeded: true,
                 creditsAvailable: true,
                 balanceIsWorkspace: true)) == "1,234")
+
+        // MiMo keeps its balance in a "Balance" detail row; the paid/granted breakdown stays out of the
+        // menu bar so the lane shows the headline amount only.
+        let mimoSnapshot = MiMoUsageSnapshot(
+            balance: 4.84,
+            currency: "CNY",
+            cashBalance: 4.84,
+            giftBalance: 0,
+            updatedAt: Date())
+            .toUsageSnapshot()
+        #expect(MenuBarLayoutBalanceResolver.balance(provider: .mimo, snapshot: mimoSnapshot) == "CN¥4.84")
+
+        // Accounts without a paid/granted split store the bare amount, which passes through unchanged.
+        let mimoBareSnapshot = MiMoUsageSnapshot(
+            balance: 25.51,
+            currency: "USD",
+            updatedAt: Date())
+            .toUsageSnapshot()
+        #expect(MenuBarLayoutBalanceResolver.balance(provider: .mimo, snapshot: mimoBareSnapshot) == "$25.51")
         #expect(MenuBarLayoutToken.balance.editorLabel(provider: .openrouter) == L("Balance"))
     }
 
