@@ -64,7 +64,7 @@ read_when:
 | Usage | Grok Bot % (Cursor) | Named allowance percentage; hidden when the allowance is absent |
 | Usage | Session pace, Weekly pace, Auto pace | Signed pace delta for that window |
 | Time | Resets in, Reset at (automatic, Session, Weekly), Runs out | Selected-window relative reset, absolute reset, or pace estimate |
-| Money | Balance, Cost today, Cost 30d | OpenRouter credit balance, or local cost estimate for the selected period |
+| Money | Balance, Cost today, Cost 30d | Provider money value (OpenRouter credit, Codex credits, MiMo balance), or local cost estimate for the selected period |
 | Structure | Separator dot, Space, Line break | Spacing and optional two-line composition |
 
 The pace tokens render the same delta the menu card shows as "in deficit"/"in reserve", in the compact signed form the
@@ -80,7 +80,8 @@ preview, and keeps the signed percentages. Zero and unavailable pace stay neutra
 It colors **Session pace**, **Weekly pace**, and **Auto pace** in the layout editor. Enabling it does not add tokens,
 rewrite stored layouts, or migrate legacy display modes. Existing installs stay monochrome until the option is enabled.
 
-Balance is available only for OpenRouter and renders the same remaining-credit value shown in its menu card. Auto %
+Balance renders the provider's money value: OpenRouter's remaining credit (the same value shown in its menu card), Codex
+credits, or MiMo's account balance. Providers without such a value render an en dash. Auto %
 uses the same provider-aware automatic-window resolution as the legacy menu bar metric setting. For balance-only
 providers, Auto % shows the available money, points, or API spend instead of inventing a quota percentage. Both the
 status item and editor preview preserve real quota percentages when a usable limit exists. When a reset token

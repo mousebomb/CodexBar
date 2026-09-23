@@ -1043,6 +1043,16 @@ extension StatusItemController {
         snapshot: UsageSnapshot?,
         automatic: MenuBarLayoutRenderWindow?) -> String?
     {
+        // Provider-specific by design: a MiMo account without a token plan has no quota window at all,
+        // so the automatic lane has nothing to render as a percentage and falls back to the balance
+        // resolved by the layout path. A token plan keeps `primary` and therefore keeps its percentage.
+        if provider == .mimo,
+           let snapshot,
+           snapshot.primary == nil,
+           let balance = MenuBarLayoutBalanceResolver.balance(provider: .mimo, snapshot: snapshot)
+        {
+            return balance
+        }
         // Provider-specific by design: DeepInfra's real billing window has no balance detail.
         let balanceOnly = provider == .deepseek
             || (provider == .deepinfra && automatic?.resetDescription != nil && automatic?.resetsAt == nil)

@@ -24,7 +24,7 @@ final class MenuBarBalanceNativeProofTests: XCTestCase {
         let root = directory.appendingPathComponent("fixture-\(UUID().uuidString)", isDirectory: true)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: root) }
-        let providers: [UsageProvider] = [.deepseek, .poe, .openrouter]
+        let providers: [UsageProvider] = [.deepseek, .poe, .openrouter, .mimo]
         let settings = try Self.settings(root: root, providers: providers)
         defer { settings.configFileWatcher?.stop() }
         let tokens: [MenuBarLayoutToken] = environment["CODEXBAR_BALANCE_PROOF_WITH_RESET"] == "1"
@@ -177,6 +177,12 @@ final class MenuBarBalanceNativeProofTests: XCTestCase {
                 usedPercent: 75.32,
                 keyLimit: 20,
                 keyUsage: 5,
+                updatedAt: now).toUsageSnapshot(),
+            .mimo: MiMoUsageSnapshot(
+                balance: zero ? 0 : 4.84,
+                currency: "CNY",
+                cashBalance: zero ? 0 : 4.84,
+                giftBalance: 0,
                 updatedAt: now).toUsageSnapshot(),
         ]
     }
